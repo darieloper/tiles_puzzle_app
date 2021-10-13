@@ -61,13 +61,19 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                               borderRadius: BorderRadius.circular(10)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.network(element.urls.thumb,
-                                fit: BoxFit.fill,
-                                loadingBuilder: (_, widget, loadingProgress) {
-                              return loadingProgress == null
-                                  ? widget
-                                  : blurWidget;
-                            }),
+                            child: GestureDetector(
+                              onTap: () => controller.seePreview(element),
+                              child: Hero(
+                                tag: element.id,
+                                child: Image.network(element.urls.thumb,
+                                    fit: BoxFit.fill, loadingBuilder:
+                                        (_, widget, loadingProgress) {
+                                  return loadingProgress == null
+                                      ? widget
+                                      : blurWidget;
+                                }),
+                              ),
+                            ),
                           ),
                         ),
                       ),

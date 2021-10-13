@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:tiles_puzzle_app/domain/entities/unsplash_picture.dart';
 import 'package:tiles_puzzle_app/domain/repositories/pictures_repository.dart';
 import 'package:tiles_puzzle_app/domain/use_cases/get_random_image.dart';
 import 'package:tiles_puzzle_app/presentation/gallery/gallery_presenter.dart';
+import 'package:tiles_puzzle_app/presentation/preview/preview_view.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/controller.dart';
 
 class GalleryController extends BaseController {
@@ -33,5 +35,15 @@ class GalleryController extends BaseController {
     };
 
     return super.onStart;
+  }
+
+  void seePreview(UnsplashPicture picture) {
+    Get.to(() => PreviewPage(
+          id: picture.id,
+          title: picture.description ?? picture.altDescription ?? 'Preview',
+          imageUrl:
+              picture.urls.raw + 'w=${Get.width}&h=${Get.height}&fit=crop',
+          blurHash: picture.blurHash,
+        ));
   }
 }
