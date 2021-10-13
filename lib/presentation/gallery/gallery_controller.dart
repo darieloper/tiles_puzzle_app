@@ -30,7 +30,6 @@ class GalleryController extends BaseController {
 
     presenter.onSuccess = (GetRandomImageResponse response) {
       pictures.value = response.pictures;
-      print(response.pictures.length);
     };
 
     return super.onStart;

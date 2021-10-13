@@ -7,6 +7,7 @@ import 'package:tiles_puzzle_app/domain/entities/unsplash_picture.dart';
 import 'package:tiles_puzzle_app/presentation/gallery/gallery_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class GalleryPage extends View {
   final String title;
@@ -16,7 +17,8 @@ class GalleryPage extends View {
   _GalleryPageState createState() => _GalleryPageState();
 }
 
-class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
+class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
+    with SingleTickerProviderStateMixin {
   _GalleryPageState() : super(GalleryController(PicturesRepository()));
 
   @override
@@ -46,16 +48,28 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
                     hash: element.blurHash,
                     width: Get.width / 3,
                   );
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        element.urls.thumb,
-                        fit: BoxFit.fill,
-                        loadingBuilder: (_, widget, loadingProgress) =>
-                            loadingProgress == null ? widget : blurWidget,
+                  return AnimationConfiguration.staggeredGrid(
+                    position: index,
+                    columnCount: Get.height > Get.width ? 3 : 5,
+                    duration: Duration(milliseconds: 2000),
+                    child: ScaleAnimation(
+                      child: FadeInAnimation(
+                        child: Card(
+                          color: Colors.transparent,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(element.urls.thumb,
+                                fit: BoxFit.fill,
+                                loadingBuilder: (_, widget, loadingProgress) {
+                              return loadingProgress == null
+                                  ? widget
+                                  : blurWidget;
+                            }),
+                          ),
+                        ),
                       ),
                     ),
                   );
