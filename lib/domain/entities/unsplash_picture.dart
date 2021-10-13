@@ -1,10 +1,14 @@
+import 'package:tiles_puzzle_app/domain/entities/user.dart';
+
 class UnsplashPicture {
   final String id;
   final String? description;
   final String? altDescription;
   final int likes;
-  final UrlsData? urls;
-  final LinksData? links;
+  final String blurHash;
+  final UrlsData urls;
+  final LinksData links;
+  final User user;
 
   UnsplashPicture({
     required this.id,
@@ -13,17 +17,24 @@ class UnsplashPicture {
     required this.likes,
     required this.urls,
     required this.links,
+    required this.blurHash,
+    required this.user,
   });
 
   factory UnsplashPicture.fromJson(Map<String, dynamic> json) {
     final urls = json['urls'] as Map<String, dynamic>;
     final links = json['links'] as Map<String, dynamic>;
+    final user = json['user'] as Map<String, dynamic>;
 
     return UnsplashPicture(
       id: json['id'],
       likes: json['likes'],
+      description: json['description'],
+      altDescription: json['altDescription'],
       urls: UrlsData.fromJson(urls),
       links: LinksData.fromJson(links),
+      blurHash: json['blur_hash'],
+      user: User.fromJson(user),
     );
   }
 

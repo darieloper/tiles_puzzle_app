@@ -20,8 +20,10 @@ class PicturesRepository extends IPicturesRepository {
       final uri = Uri.parse(dotenv.env['BASE_URL']! +
           '/search?page=$page&per_page=$perPage&query=$criteria');
 
-      final response = await http.get(uri,
-          headers: {'Authorization': 'Client-ID ${dotenv.env['ACCESS_KEY']}'});
+      final response = await http.get(uri, headers: {
+        'Authorization': 'Client-ID ${dotenv.env['ACCESS_KEY']}',
+        'Accept-Version': 'v1',
+      });
 
       if (response.statusCode == HttpStatus.ok) {
         result = SearchResults.fromJson(jsonDecode(response.body));

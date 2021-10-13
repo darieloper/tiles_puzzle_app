@@ -29,6 +29,7 @@ dependencies:
   infinite_scroll_pagination: ^3.1.0
   get: ^4.3.8
   flutter_dotenv: ^5.0.2
+  blurhash_dart: ^1.0.2
 
 dev_dependencies:
   flutter_test:
