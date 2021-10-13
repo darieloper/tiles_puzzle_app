@@ -41,9 +41,9 @@ class GalleryController extends BaseController {
     Get.to(() => PreviewPage(
           id: picture.id,
           title: picture.description ?? picture.altDescription ?? 'Preview',
-          imageUrl:
-              picture.urls.raw + 'w=${Get.width}&h=${Get.height}&fit=crop',
+          imageUrl: picture.urls.raw + 'w=${Get.width}&h=${Get.height}&q=60',
           blurHash: picture.blurHash,
+          author: picture.user.name,
         ));
   }
 }
