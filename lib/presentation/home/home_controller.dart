@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tiles_puzzle_app/data/repositories/pictures_repository.dart';
 
 class HomeController extends GetxController {
   String label = 'Pressed: ';
@@ -6,7 +7,9 @@ class HomeController extends GetxController {
 
   HomeController();
 
-  increment() {
+  increment() async {
     counter.value++;
+    final result = await PicturesRepository().search('perros');
+    print(result.results.elementAt(0));
   }
 }
