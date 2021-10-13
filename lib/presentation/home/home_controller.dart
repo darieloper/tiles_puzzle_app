@@ -9,7 +9,7 @@ class HomeController extends GetxController {
 
   increment() async {
     counter.value++;
-    final result = await PicturesRepository().search('perros');
-    print(result.results.elementAt(0));
+    final result = await PicturesRepository().random();
+    print(result.elementAt(0));
   }
 }
