@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/data/repositories/pictures_repository.dart';
+import 'package:tiles_puzzle_app/presentation/utils/base/controller.dart';
 
-class HomeController extends GetxController {
+class HomeController extends BaseController {
   String label = 'Pressed: ';
   var counter = 0.obs;
 
-  HomeController();
+  HomeController() : super();
 
   increment() async {
     counter.value++;

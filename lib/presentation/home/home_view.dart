@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/presentation/home/home_controller.dart';
-import 'package:tiles_puzzle_app/presentation/utils/view.dart';
+import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
 
 class HomePage extends View {
   final String title;
