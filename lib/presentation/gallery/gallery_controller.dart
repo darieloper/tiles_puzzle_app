@@ -44,6 +44,7 @@ class GalleryController extends BaseController {
           imageUrl: picture.urls.raw + 'w=${Get.width}&h=${Get.height}&q=60',
           blurHash: picture.blurHash,
           author: picture.user.name,
+          location: picture.user.location,
         ));
   }
 }

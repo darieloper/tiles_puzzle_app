@@ -6,6 +6,7 @@ import 'package:tiles_puzzle_app/data/repositories/pictures_repository.dart';
 import 'package:tiles_puzzle_app/domain/entities/unsplash_picture.dart';
 import 'package:tiles_puzzle_app/presentation/gallery/gallery_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
+import 'package:tiles_puzzle_app/presentation/utils/blur_hash_image_generator.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -44,10 +45,6 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                   final element =
                       controller.pictures.elementAt(index) as UnsplashPicture;
 
-                  final blurWidget = BlurHashImage(
-                    hash: element.blurHash,
-                    width: Get.width / 3,
-                  );
                   return AnimationConfiguration.staggeredGrid(
                     position: index,
                     columnCount: Get.height > Get.width ? 3 : 5,
@@ -65,13 +62,13 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                               onTap: () => controller.seePreview(element),
                               child: Hero(
                                 tag: element.id,
-                                child: Image.network(element.urls.thumb,
-                                    fit: BoxFit.fill, loadingBuilder:
-                                        (_, widget, loadingProgress) {
-                                  return loadingProgress == null
-                                      ? widget
-                                      : blurWidget;
-                                }),
+                                child: FadeInImage(
+                                  image: NetworkImage(element.urls.thumb),
+                                  fit: BoxFit.fill,
+                                  placeholder: BlurHashImageGenerator.generate(
+                                          element.blurHash, Get.width / 3)
+                                      .image,
+                                ),
                               ),
                             ),
                           ),

@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image/image.dart' as imageUtils;
+import 'package:tiles_puzzle_app/presentation/utils/blur_hash_image_generator.dart';
 
 class BlurHashImage extends StatelessWidget {
   final String hash;
@@ -14,7 +13,6 @@ class BlurHashImage extends StatelessWidget {
   });
 
   Widget build(BuildContext context) {
-    final image = BlurHash.decode(hash).toImage(width.toInt(), width.toInt());
-    return Image.memory(Uint8List.fromList(imageUtils.encodeJpg(image)));
+    return BlurHashImageGenerator.generate(hash, width);
   }
 }

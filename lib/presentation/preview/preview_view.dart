@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/presentation/preview/preview_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
+import 'package:tiles_puzzle_app/presentation/utils/blur_hash_image_generator.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
 
 class PreviewPage extends View {
@@ -12,6 +13,7 @@ class PreviewPage extends View {
   final String imageUrl;
   final String blurHash;
   final String author;
+  final String? location;
 
   PreviewPage({
     required this.id,
@@ -19,6 +21,7 @@ class PreviewPage extends View {
     required this.imageUrl,
     required this.blurHash,
     required this.author,
+    required this.location,
   });
 
   @override
@@ -41,38 +44,15 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
               Positioned(
                 left: 0,
                 top: 0,
-                child: Image.network(widget.imageUrl,
-                    fit: BoxFit.fill,
-                    width: Get.width,
-                    height: Get.height, loadingBuilder:
-                        (_, _widget, ImageChunkEvent? loadingProgress) {
-                  print([
-                    loadingProgress?.cumulativeBytesLoaded,
-                    loadingProgress?.expectedTotalBytes
-                  ]);
-                  // @Todo check this print show twice which means that if both time is null
-                  // the images is currently loaded from cache
-                  if ((loadingProgress != null &&
-                          loadingProgress.cumulativeBytesLoaded ==
-                              loadingProgress.expectedTotalBytes) ||
-                      loadingProgress == null) {
-                    Future.delayed(const Duration(milliseconds: 200),
-                        () => controller.loadComplete());
-                  }
-                  return loadingProgress == null
-                      ? _widget
-                      : Container(
-                          width: Get.width,
-                          height: Get.height,
-                          child: Center(
-                            child: SizedBox(
-                              width: 35,
-                              height: 35,
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        );
-                }),
+                child: FadeInImage(
+                  image: NetworkImage(widget.imageUrl),
+                  fit: BoxFit.fill,
+                  width: Get.width,
+                  height: Get.height,
+                  placeholder: BlurHashImageGenerator.generate(
+                          widget.blurHash, Get.width)
+                      .image,
+                ),
               ),
               Positioned(
                 bottom: 0,
@@ -83,7 +63,7 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                     opacity: controller.loadCompleted.value ? 1 : 0,
                     duration: const Duration(seconds: 1),
                     curve: Curves.easeIn,
-                    child: new ClipRect(
+                    child: ClipRect(
                       child: new BackdropFilter(
                         filter: new ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
                         child: new Container(
@@ -103,7 +83,7 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                                 height: 5,
                               ),
                               new Text(
-                                'Location: ${widget.author}',
+                                'Location: ${widget.location ?? 'Unknow'}',
                                 style: TextStyle(fontSize: 16),
                               ),
                             ],
