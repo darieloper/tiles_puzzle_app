@@ -7,7 +7,6 @@ import 'package:tiles_puzzle_app/domain/entities/unsplash_picture.dart';
 import 'package:tiles_puzzle_app/presentation/gallery/gallery_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
 import 'package:tiles_puzzle_app/presentation/utils/blur_hash_image_generator.dart';
-import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class GalleryPage extends View {
