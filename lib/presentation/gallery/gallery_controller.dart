@@ -11,6 +11,7 @@ class GalleryController extends BaseController {
   final GalleryPresenter presenter;
   var pictures = <dynamic>[].obs;
   var loading = true.obs;
+  var isFirstButtonSelected = true.obs;
 
   GalleryController(IPicturesRepository repository)
       : presenter = GalleryPresenter(repository),

@@ -5,8 +5,9 @@ import 'package:tiles_puzzle_app/data/utils/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
   final Size _preferredSize;
+  final String title;
 
-  CustomAppBar() : _preferredSize = Size.fromHeight(140);
+  CustomAppBar({required this.title}) : _preferredSize = Size.fromHeight(140);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Preview',
+                title,
                 style: TextStyle(color: Colors.white, fontSize: 22),
               )
             ],

@@ -34,7 +34,9 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
 
   @override
   Widget get view => Scaffold(
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(
+          title: 'Preview',
+        ),
         backgroundColor: ConstantColors.PRIMARY,
         body: Stack(
           clipBehavior: Clip.none,

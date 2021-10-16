@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/presentation/home/home_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
+import 'package:tiles_puzzle_app/presentation/widgets/app_bar.dart';
 
 class HomePage extends View {
   final String title;
@@ -17,8 +18,8 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
 
   @override
   Widget get view => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+        appBar: CustomAppBar(
+          title: widget.title,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
