@@ -10,7 +10,5 @@ class HomeController extends BaseController {
 
   increment() async {
     counter.value++;
-    final result = await PicturesRepository().random();
-    print(result.elementAt(0));
   }
 }

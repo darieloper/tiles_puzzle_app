@@ -12,7 +12,7 @@ class BlurHashImageGenerator {
     );
     return Image.memory(
       Uint8List.fromList(imageUtils.encodeJpg(image)),
-      fit: BoxFit.contain,
+      fit: BoxFit.cover,
     );
   }
 }

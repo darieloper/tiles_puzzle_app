@@ -20,64 +20,24 @@ class GalleryPage extends View {
   _GalleryPageState createState() => _GalleryPageState();
 }
 
-class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
-    with TickerProviderStateMixin {
-  AnimationController? _animationController;
-  Animation<double>? _animation;
-
+class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
   _GalleryPageState() : super(GalleryController(PicturesRepository()));
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-
-    _animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-        parent: _animationController!,
-        curve: controller.isFirstButtonSelected.value
-            ? Curves.easeIn
-            : Curves.easeOut))
-      ..addListener(() {
-        if (controller.isFirstButtonSelected.isFalse &&
-            _animation!.value == 0.0) {
-          _animationController?.stop();
-        }
-        setState(() {});
-      });
-  }
-
-  @override
-  void dispose() {
-    _animationController?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget get view => Scaffold(
         appBar: CustomAppBar(title: widget.title),
         backgroundColor: ConstantColors.PRIMARY,
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          height: Get.height,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-          ),
-          child: Obx(() {
-            if (controller.loading.isFalse) {
-              Future.delayed(const Duration(seconds: 2), () {
-                _animationController?.forward();
-              });
-            }
-
-            return Conditional.single(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            height: Get.height,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20),
+                topLeft: Radius.circular(20),
+              ),
+            ),
+            child: Conditional.single(
               context: context,
               conditionBuilder: (_) => controller.loading.value,
               widgetBuilder: (_) => Center(
@@ -94,12 +54,6 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                       onButtonChangeFocus: (isFirstSelected) {
                         controller.isFirstButtonSelected.value =
                             isFirstSelected;
-                        if (isFirstSelected) {
-                          _animationController?.forward();
-                          return;
-                        }
-
-                        _animationController?.reverse();
                       },
                     ),
                   ),
@@ -133,18 +87,14 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                                     child: GestureDetector(
                                       onTap: () =>
                                           controller.seePreview(element),
-                                      child: Hero(
-                                        tag: element.id,
-                                        child: FadeInImage(
-                                          image:
-                                              NetworkImage(element.urls.thumb),
-                                          fit: BoxFit.fill,
-                                          placeholder:
-                                              BlurHashImageGenerator.generate(
-                                                      element.blurHash,
-                                                      Get.width / 3)
-                                                  .image,
-                                        ),
+                                      child: FadeInImage(
+                                        image: NetworkImage(element.urls.thumb),
+                                        fit: BoxFit.fill,
+                                        placeholder:
+                                            BlurHashImageGenerator.generate(
+                                                    element.blurHash,
+                                                    Get.width / 3)
+                                                .image,
                                       ),
                                     ),
                                   ),
@@ -158,20 +108,27 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                   ),
                 ],
               ),
-            );
-          }),
-        ),
-        floatingActionButton: Transform.scale(
-          scale: _animation!.value,
-          child: FloatingActionButton(
-            backgroundColor: ConstantColors.PRIMARY,
-            onPressed: () {},
-            mini: true,
-            child: IconButton(
-              icon: Icon(
-                Icons.refresh,
+            )),
+        floatingActionButton: Obx(
+          () => Visibility(
+            visible: controller.loading.isFalse,
+            child: AnimatedOpacity(
+              opacity: controller.loading.isFalse &&
+                      controller.isFirstButtonSelected.isTrue
+                  ? 1
+                  : 0,
+              duration: const Duration(milliseconds: 300),
+              child: FloatingActionButton(
+                backgroundColor: ConstantColors.PRIMARY,
+                onPressed: () {},
+                tooltip: 'Refresh',
+                child: RawMaterialButton(
+                  padding: EdgeInsets.all(16),
+                  shape: CircleBorder(side: BorderSide.none),
+                  child: Icon(Icons.refresh),
+                  onPressed: () {},
+                ),
               ),
-              onPressed: () {},
             ),
           ),
         ),

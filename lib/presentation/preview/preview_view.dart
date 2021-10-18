@@ -69,22 +69,19 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
             Positioned(
               left: 0,
               top: 0,
-              child: Hero(
-                tag: widget.id,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  child: FadeInImage(
-                    image: NetworkImage(widget.imageUrl),
-                    fit: BoxFit.fill,
-                    width: Get.width,
-                    height: Get.height,
-                    placeholder: BlurHashImageGenerator.generate(
-                            widget.blurHash, Get.width)
-                        .image,
-                  ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                child: FadeInImage(
+                  image: NetworkImage(widget.imageUrl),
+                  fit: BoxFit.cover,
+                  width: Get.width,
+                  height: Get.height,
+                  placeholder: BlurHashImageGenerator.generate(
+                          widget.blurHash, Get.width)
+                      .image,
                 ),
               ),
             ),
@@ -102,7 +99,9 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                       filter: new ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
                       child: new Container(
                           padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
+                            vertical: 20,
+                            horizontal: 10,
+                          ),
                           decoration: new BoxDecoration(
                               color: Colors.grey.shade200.withOpacity(0.4)),
                           child: Row(

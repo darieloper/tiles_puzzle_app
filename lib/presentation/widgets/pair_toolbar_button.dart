@@ -75,9 +75,10 @@ class _PairToolbarButtonsState extends State<PairToolbarButtons> {
   Color? _firstButtonColor(bool isFirstSelected) =>
       isFirstSelected == _isFirstSelected ? ConstantColors.BTN_PRIMARY : null;
 
-  BorderSide _borderSideForButton(bool isFirstSelected) => isFirstSelected
-      ? BorderSide.none
-      : BorderSide(color: Colors.grey.shade300);
+  BorderSide _borderSideForButton(bool isFirstSelected) =>
+      isFirstSelected == _isFirstSelected
+          ? BorderSide.none
+          : BorderSide(color: Colors.grey.shade300);
 
   Color _textColor(bool isFirstSelected) => isFirstSelected == _isFirstSelected
       ? Colors.white

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:tiles_puzzle_app/presentation/gallery/gallery_view.dart';
+import 'package:tiles_puzzle_app/presentation/home/home_view.dart';
 
 void main() async {
   await dotenv.load();
