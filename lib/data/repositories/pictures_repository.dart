@@ -40,7 +40,7 @@ class PicturesRepository extends IPicturesRepository with DefaultHeaders {
     List<UnsplashPicture> result = [];
     try {
       final uri =
-          Uri.parse(dotenv.env['BASE_URL']! + '/photos/random?count=$count');
+          Uri.parse(dotenv.env['BASE_URL']! + 'photos/random?count=$count');
 
       final response = await http.get(uri, headers: defaultHeaders);
 

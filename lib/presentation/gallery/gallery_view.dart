@@ -31,23 +31,30 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 600));
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
 
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(
         parent: _animationController!,
         curve: controller.isFirstButtonSelected.value
             ? Curves.easeIn
             : Curves.easeOut))
       ..addListener(() {
+        if (controller.isFirstButtonSelected.isFalse &&
+            _animation!.value == 0.0) {
+          _animationController?.stop();
+        }
         setState(() {});
       });
-
-    _animationController!.forward();
   }
 
   @override
   void dispose() {
-    _animationController!.dispose();
+    _animationController?.dispose();
     super.dispose();
   }
 
@@ -55,23 +62,28 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
   Widget get view => Scaffold(
         appBar: CustomAppBar(title: widget.title),
         backgroundColor: ConstantColors.PRIMARY,
-        body: Obx(
-          () => Conditional.single(
-            context: context,
-            conditionBuilder: (_) => controller.loading.value,
-            widgetBuilder: (_) => Center(
-              child: CircularProgressIndicator(),
-            ),
-            fallbackBuilder: (_) => Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              height: Get.height,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20)),
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          height: Get.height,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+          ),
+          child: Obx(() {
+            if (controller.loading.isFalse) {
+              Future.delayed(const Duration(seconds: 2), () {
+                _animationController?.forward();
+              });
+            }
+
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (_) => controller.loading.value,
+              widgetBuilder: (_) => Center(
+                child: CircularProgressIndicator(),
               ),
-              child: Column(
+              fallbackBuilder: (_) => Column(
                 children: [
                   Container(
                     height: 40,
@@ -83,11 +95,11 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                         controller.isFirstButtonSelected.value =
                             isFirstSelected;
                         if (isFirstSelected) {
-                          _animationController!.forward();
+                          _animationController?.forward();
                           return;
                         }
 
-                        _animationController!.reverse();
+                        _animationController?.reverse();
                       },
                     ),
                   ),
@@ -146,8 +158,8 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController>
                   ),
                 ],
               ),
-            ),
-          ),
+            );
+          }),
         ),
         floatingActionButton: Transform.scale(
           scale: _animation!.value,
