@@ -128,23 +128,45 @@ class _CustomAppBarState extends State<CustomAppBar>
                   SizedBox(
                     width: 10,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(color: Colors.white, fontSize: 22),
-                      ),
-                      SizedBox(height: widget.subTitle != null ? 10 : 0),
-                      Visibility(
-                        visible: widget.subTitle != null,
-                        child: Text(
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: (widget.subTitle?.length ?? 0) > 50 ? 20 : 0,
+                      right: 40,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
                           widget.title,
-                          style: TextStyle(color: Colors.white, fontSize: 17),
+                          style: TextStyle(
+                            fontFamily: 'Riffic',
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
+                        SizedBox(height: widget.subTitle != null ? 10 : 0),
+                        Visibility(
+                          visible: widget.subTitle != null,
+                          child: Container(
+                            width: Get.width - 100,
+                            child: Text(
+                              widget.subTitle ?? '',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontFamily: 'KGPartofMe',
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

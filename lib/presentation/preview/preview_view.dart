@@ -47,25 +47,26 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
               left: 0,
               top: 0,
               child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    color: Colors.white,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                  width: Get.width,
-                  height: Get.height,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: BlurHashImage(
-                      hash: widget.blurHash,
-                      width: Get.width,
-                    ),
-                  )),
+                  color: Colors.white,
+                ),
+                width: Get.width,
+                height: Get.height,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  child: BlurHashImage(
+                    hash: widget.blurHash,
+                    width: Get.width,
+                  ),
+                ),
+              ),
             ),
             Positioned(
               left: 0,
@@ -81,8 +82,9 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                   width: Get.width,
                   height: Get.height,
                   placeholder: BlurHashImageGenerator.generate(
-                          widget.blurHash, Get.width)
-                      .image,
+                    widget.blurHash,
+                    Get.width,
+                  ).image,
                 ),
               ),
             ),

@@ -84,3 +84,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:    
+    - family: "Riffic"
+      fonts:
+        - asset: "assets/fonts/riffic.bold.ttf"
+          style: normal
+    - family: "KGPartofMe"
+      fonts:
+        - asset: "assets/fonts/KGPartofMe.ttf"
+          style: normal
