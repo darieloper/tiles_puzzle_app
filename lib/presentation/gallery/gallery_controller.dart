@@ -17,7 +17,7 @@ class GalleryController extends BaseController {
       : presenter = GalleryPresenter(repository),
         super() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      presenter.getRandoms(count: 10);
+      presenter.getRandoms(count: 15);
     });
   }
 
@@ -49,5 +49,10 @@ class GalleryController extends BaseController {
           author: picture.user.name,
           location: picture.user.location,
         ));
+  }
+
+  void refreshRandom() {
+    loading.value = true;
+    presenter.getRandoms(count: 15);
   }
 }

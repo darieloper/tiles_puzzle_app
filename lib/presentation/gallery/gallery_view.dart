@@ -31,16 +31,17 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
         ),
         backgroundColor: ConstantColors.PRIMARY,
         body: Container(
-            padding: EdgeInsets.only(top: 10),
-            height: Get.height,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
-              ),
+          padding: EdgeInsets.only(top: 10),
+          height: Get.height,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
             ),
-            child: Conditional.single(
+          ),
+          child: Obx(
+            () => Conditional.single(
               context: context,
               conditionBuilder: (_) => controller.loading.value,
               widgetBuilder: (_) => Center(
@@ -112,7 +113,9 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
                   ),
                 ],
               ),
-            )),
+            ),
+          ),
+        ),
         floatingActionButton: Obx(
           () => Visibility(
             visible: !controller.loading.value,
@@ -130,7 +133,7 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
                   padding: EdgeInsets.all(16),
                   shape: CircleBorder(side: BorderSide.none),
                   child: Icon(Icons.refresh),
-                  onPressed: () {},
+                  onPressed: controller.refreshRandom,
                 ),
               ),
             ),
