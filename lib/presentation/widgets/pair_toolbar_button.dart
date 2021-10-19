@@ -35,7 +35,8 @@ class _PairToolbarButtonsState extends State<PairToolbarButtons> {
             widget.firstButtonText,
             style: TextStyle(
               color: _textColor(true),
-              fontWeight: _textWeight(true),
+              fontWeight: FontWeight.bold,
+              fontFamily: 'KGPartofMe',
             ),
           ),
           shape: RoundedRectangleBorder(
@@ -55,8 +56,9 @@ class _PairToolbarButtonsState extends State<PairToolbarButtons> {
           child: Text(
             widget.lastButtonText,
             style: TextStyle(
+              fontFamily: 'KGPartofMe',
               color: _textColor(false),
-              fontWeight: _textWeight(false),
+              fontWeight: FontWeight.bold,
             ),
           ),
           shape: RoundedRectangleBorder(

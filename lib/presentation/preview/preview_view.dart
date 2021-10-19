@@ -119,15 +119,20 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                                         new Text(
                                           'Author:',
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                            fontFamily: 'KGPartofMe',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         SizedBox(
-                                          width: 5,
+                                          width: 10,
                                         ),
                                         new Text(
                                           widget.author,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: 'KGPartofMe',
+                                          ),
                                         )
                                       ],
                                     ),
@@ -139,15 +144,20 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                                         new Text(
                                           'Location:',
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                            fontFamily: 'KGPartofMe',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         SizedBox(
-                                          width: 5,
+                                          width: 10,
                                         ),
                                         new Text(
                                           widget.location ?? 'Unknow',
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: 'KGPartofMe',
+                                          ),
                                         )
                                       ],
                                     ),
@@ -162,7 +172,13 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
                                               ConstantColors.SECONDARY)),
-                                  child: Text('Select'),
+                                  child: Text(
+                                    'Select',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Riffic',
+                                    ),
+                                  ),
                                 ),
                               )
                             ],
