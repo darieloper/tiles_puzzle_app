@@ -10,7 +10,7 @@ import 'package:tiles_puzzle_app/presentation/widgets/app_bar.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
 
 class PreviewPage extends View {
-  final String title;
+  final String? title;
   final String id;
   final String imageUrl;
   final String blurHash;
@@ -37,6 +37,7 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
   Widget get view => Scaffold(
         appBar: CustomAppBar(
           title: 'Preview',
+          subTitle: widget.title,
         ),
         backgroundColor: ConstantColors.PRIMARY,
         body: Stack(

@@ -5,16 +5,34 @@ import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/data/utils/constants.dart';
 import 'dart:math' as math;
 
-class CustomAppBar extends StatelessWidget implements PreferredSize {
-  final Size _preferredSize;
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
+  final String? subTitle;
+  final Size _preferredSize;
+  final bool expanded;
 
-  CustomAppBar({required this.title}) : _preferredSize = Size.fromHeight(140);
+  CustomAppBar({
+    required this.title,
+    this.expanded = false,
+    this.subTitle,
+  }) : _preferredSize = Size.fromHeight(expanded ? 170 : 140);
 
   @override
+  _CustomAppBarState createState() => _CustomAppBarState();
+
+  @override
+  Size get preferredSize => _preferredSize;
+}
+
+class _CustomAppBarState extends State<CustomAppBar>
+    with SingleTickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
-    return Container(
-        height: _preferredSize.height,
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+      child: Container(
+        height: widget.preferredSize.height,
         width: Get.width,
         color: ConstantColors.PRIMARY,
         child: Stack(
@@ -58,6 +76,36 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                 ),
               ),
             ),
+            Visibility(
+              visible: widget.expanded,
+              child: Positioned(
+                left: 50,
+                right: 50,
+                bottom: 15,
+                child: Container(
+                  width: Get.width / 1.5,
+                  height: 40,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      prefixIconConstraints:
+                          BoxConstraints(maxWidth: 50, minWidth: 40),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: EdgeInsets.all(10),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Positioned.fill(
               left: 0,
               top: 0,
@@ -84,21 +132,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title,
+                        widget.title,
                         style: TextStyle(color: Colors.white, fontSize: 22),
-                      )
+                      ),
+                      SizedBox(height: widget.subTitle != null ? 10 : 0),
+                      Visibility(
+                        visible: widget.subTitle != null,
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(color: Colors.white, fontSize: 17),
+                        ),
+                      ),
                     ],
                   )
                 ],
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
-
-  @override
-  Widget get child => SizedBox.shrink();
-
-  @override
-  Size get preferredSize => _preferredSize;
 }

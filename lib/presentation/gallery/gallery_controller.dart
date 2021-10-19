@@ -39,9 +39,11 @@ class GalleryController extends BaseController {
   }
 
   void seePreview(UnsplashPicture picture) {
+    print(picture.altDescription);
+    print(picture.description);
     Get.to(() => PreviewPage(
           id: picture.id,
-          title: picture.description ?? picture.altDescription ?? 'Preview',
+          title: picture.description ?? picture.altDescription,
           imageUrl: picture.urls.raw + 'w=${Get.width}&h=${Get.height}&q=60',
           blurHash: picture.blurHash,
           author: picture.user.name,

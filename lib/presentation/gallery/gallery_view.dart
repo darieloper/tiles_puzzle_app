@@ -25,10 +25,13 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
 
   @override
   Widget get view => Scaffold(
-        appBar: CustomAppBar(title: widget.title),
+        appBar: CustomAppBar(
+          title: widget.title,
+          expanded: true,
+        ),
         backgroundColor: ConstantColors.PRIMARY,
         body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.only(top: 10),
             height: Get.height,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -65,6 +68,7 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
                       crossAxisCount: 3,
                       crossAxisSpacing: 7,
                       mainAxisSpacing: 7,
+                      padding: EdgeInsets.all(10),
                       children: List.generate(
                         controller.pictures.length,
                         (index) {
@@ -111,9 +115,9 @@ class _GalleryPageState extends ViewState<GalleryPage, GalleryController> {
             )),
         floatingActionButton: Obx(
           () => Visibility(
-            visible: controller.loading.isFalse,
+            visible: !controller.loading.value,
             child: AnimatedOpacity(
-              opacity: controller.loading.isFalse &&
+              opacity: !controller.loading.value &&
                       controller.isFirstButtonSelected.isTrue
                   ? 1
                   : 0,
