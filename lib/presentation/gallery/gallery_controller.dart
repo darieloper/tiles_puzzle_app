@@ -46,6 +46,9 @@ class GalleryController extends BaseController {
           blurHash: picture.blurHash,
           author: picture.user.name,
           location: picture.user.location,
+          likes: picture.likes,
+          views: picture.views,
+          downloads: picture.downloads,
         ));
   }
 

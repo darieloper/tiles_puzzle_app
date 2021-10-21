@@ -9,6 +9,8 @@ class UnsplashPicture {
   final UrlsData urls;
   final LinksData links;
   final User user;
+  final int views;
+  final int downloads;
 
   UnsplashPicture({
     required this.id,
@@ -19,6 +21,8 @@ class UnsplashPicture {
     required this.links,
     required this.blurHash,
     required this.user,
+    required this.views,
+    required this.downloads,
   });
 
   factory UnsplashPicture.fromJson(Map<String, dynamic> json) {
@@ -28,7 +32,9 @@ class UnsplashPicture {
 
     return UnsplashPicture(
       id: json['id'],
-      likes: json['likes'],
+      likes: json['likes'] ?? 0,
+      views: json['views'] ?? 0,
+      downloads: json['downloads'] ?? 0,
       description: json['description'],
       altDescription: json['altDescription'],
       urls: UrlsData.fromJson(urls),
@@ -40,7 +46,16 @@ class UnsplashPicture {
 
   @override
   String toString() {
-    return '{ id: "$id", likes: $likes, urls: $urls, links: $links }';
+    return '''
+        { 
+          id: "$id",
+          likes: $likes,
+          urls: $urls,
+          links: $links,
+          views: $views,
+          downloads: $downloads
+        }
+    ''';
   }
 }
 

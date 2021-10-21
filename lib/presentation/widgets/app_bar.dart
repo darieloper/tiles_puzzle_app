@@ -5,16 +5,20 @@ import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/data/utils/constants.dart';
 import 'dart:math' as math;
 
+import 'package:tiles_puzzle_app/presentation/widgets/badge.dart';
+
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final String? subTitle;
   final Size _preferredSize;
   final bool expanded;
+  final List<Widget>? actions;
 
   CustomAppBar({
     required this.title,
     this.expanded = false,
     this.subTitle,
+    this.actions,
   }) : _preferredSize = Size.fromHeight(expanded ? 170 : 140);
 
   @override
@@ -128,43 +132,54 @@ class _CustomAppBarState extends State<CustomAppBar>
                   SizedBox(
                     width: 10,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: (widget.subTitle?.length ?? 0) > 50 ? 20 : 0,
-                      right: 40,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.title,
-                          style: TextStyle(
-                            fontFamily: 'Riffic',
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: (widget.subTitle?.length ?? 0) > 50 ? 20 : 0,
+                        right: 40,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                              fontFamily: 'Riffic',
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: widget.subTitle != null ? 10 : 0),
-                        Visibility(
-                          visible: widget.subTitle != null,
-                          child: Container(
-                            width: Get.width - 100,
-                            child: Text(
-                              widget.subTitle ?? '',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontFamily: 'KGPartofMe',
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
+                          SizedBox(height: widget.subTitle != null ? 10 : 0),
+                          Visibility(
+                            visible: widget.subTitle != null,
+                            child: Container(
+                              width: Get.width - 100,
+                              child: Text(
+                                widget.subTitle ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontFamily: 'KGPartofMe',
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.actions != null,
+                    child: Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [...widget.actions ?? []],
+                      ),
                     ),
                   ),
                 ],

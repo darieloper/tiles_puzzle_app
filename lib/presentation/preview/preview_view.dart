@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiles_puzzle_app/data/utils/constants.dart';
+import 'package:tiles_puzzle_app/data/utils/counter_util.dart';
 import 'package:tiles_puzzle_app/presentation/preview/preview_controller.dart';
 import 'package:tiles_puzzle_app/presentation/utils/base/view.dart';
 import 'package:tiles_puzzle_app/presentation/utils/blur_hash_image_generator.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/app_bar.dart';
+import 'package:tiles_puzzle_app/presentation/widgets/badge.dart';
 import 'package:tiles_puzzle_app/presentation/widgets/blur_hash_image.dart';
 
 class PreviewPage extends View {
@@ -16,6 +18,9 @@ class PreviewPage extends View {
   final String blurHash;
   final String author;
   final String? location;
+  final int likes;
+  final int views;
+  final int downloads;
 
   PreviewPage({
     required this.id,
@@ -24,6 +29,9 @@ class PreviewPage extends View {
     required this.blurHash,
     required this.author,
     required this.location,
+    required this.likes,
+    required this.downloads,
+    required this.views,
   });
 
   @override
@@ -38,6 +46,38 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
         appBar: CustomAppBar(
           title: 'Preview',
           subTitle: widget.title,
+          actions: [
+            Tooltip(
+              message: 'Likes',
+              child: Padding(
+                padding: EdgeInsets.only(right: 7),
+                child: Badge(
+                  label: CounterUtil.shortValue(widget.likes),
+                  icon: Icons.thumb_up_alt,
+                ),
+              ),
+            ),
+            Tooltip(
+              message: 'Views',
+              child: Padding(
+                padding: EdgeInsets.only(right: 7),
+                child: Badge(
+                  label: CounterUtil.shortValue(widget.views),
+                  icon: Icons.remove_red_eye,
+                ),
+              ),
+            ),
+            Tooltip(
+              message: 'Downloads',
+              child: Padding(
+                padding: EdgeInsets.only(right: 7),
+                child: Badge(
+                  label: CounterUtil.shortValue(widget.downloads),
+                  icon: Icons.download,
+                ),
+              ),
+            ),
+          ],
         ),
         backgroundColor: ConstantColors.PRIMARY,
         body: Stack(
@@ -101,88 +141,90 @@ class _PreviewPageState extends ViewState<PreviewPage, PreviewController> {
                     child: new BackdropFilter(
                       filter: new ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
                       child: new Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: 10,
-                          ),
-                          decoration: new BoxDecoration(
-                              color: Colors.grey.shade200.withOpacity(0.4)),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        new Text(
-                                          'Author:',
-                                          style: TextStyle(
-                                            fontFamily: 'KGPartofMe',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 10,
+                        ),
+                        decoration: new BoxDecoration(
+                            color: Colors.grey.shade200.withOpacity(0.4)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      new Text(
+                                        'Author:',
+                                        style: TextStyle(
+                                          fontFamily: 'KGPartofMe',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        SizedBox(
-                                          width: 10,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      new Text(
+                                        widget.author,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: 'KGPartofMe',
                                         ),
-                                        new Text(
-                                          widget.author,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: 'KGPartofMe',
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        new Text(
-                                          'Location:',
-                                          style: TextStyle(
-                                            fontFamily: 'KGPartofMe',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      new Text(
+                                        'Location:',
+                                        style: TextStyle(
+                                          fontFamily: 'KGPartofMe',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        SizedBox(
-                                          width: 10,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      new Text(
+                                        widget.location ?? 'Unknow',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: 'KGPartofMe',
                                         ),
-                                        new Text(
-                                          widget.location ?? 'Unknow',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: 'KGPartofMe',
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 100,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              ConstantColors.SECONDARY)),
-                                  child: Text(
-                                    'Select',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Riffic',
-                                    ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          ConstantColors.SECONDARY),
+                                ),
+                                child: Text(
+                                  'Select',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Riffic',
                                   ),
                                 ),
-                              )
-                            ],
-                          )),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
